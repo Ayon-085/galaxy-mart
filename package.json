@@ -1,0 +1,47 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "config": "^3.3.7",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "joi": "^17.6.0",
+    "joi-password-complexity": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "multer": "*",
+    "nodemon": "^2.0.16",
+    "random-key-generator": "^1.2.3",
+    "require": "^2.4.20",
+    "shortid": "^2.2.16",
+    "slugify": "^1.6.5",
+    "validator": "^13.7.0"
+  },
+  "scripts": {
+    "start": "nodemon backend/server.js"
+  },
+  "name": "galaxy_mart",
+  "version": "1.0.0",
+  "description": "E-commerce Web Application",
+  "main": "servers.js",
+  "keywords": [
+    "e-commerce",
+    "web",
+    "script",
+    "api",
+    "node",
+    "mongoose",
+    "mongo",
+    "ayon",
+    "isahaq"
+  ],
+  "author": "sherlocked",
+  "license": "ISC",
+  "devDependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3"
+  }
+}
