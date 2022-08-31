@@ -26,7 +26,7 @@ const CartScreen = () => {
   const updateCartHandler = async (item, quantity) => {
 
     //backend
-      console.log("item", item)
+      //console.log("item", item)
       const {data}= await axios.get(`/products/details/${item._id}`)
       //console.log(data);
    
@@ -37,6 +37,16 @@ const CartScreen = () => {
         type: 'CART_ADD_ITEM',
         payload: { ...item, quantity},
       });
+      ctxDispatch({
+        type: 'CART_ADD_ITEM_BACKEND',
+        payload: {
+           productId:item._id,
+           supplier: item.supplier,
+           price:item.price,
+           quantity:quantity,
+
+          },
+      });
   };
 
   const removeHandler = (item) => {
@@ -46,6 +56,17 @@ const CartScreen = () => {
        type: 'CART_REMOVE_ITEM',
        payload: item
        });
+       ctxDispatch({
+        type: 'CART_REMOVE_ITEM_BACKEND',
+        payload:  {
+          productId:item._id,
+          supplier: item.supplier,
+          price:item.price,
+          quantity:item.quantity,
+
+         }
+        });
+       
   };
 
   const checkOutHandler = async () => {
@@ -69,7 +90,7 @@ const CartScreen = () => {
           ) : (
             <ListGroup>
               {cartItems.map((item) => (
-                <ListGroup.Item>
+                <ListGroup.Item key={item._id}>
                   <Row className="align-items-center">
                     <Col md={4}>
                       <img

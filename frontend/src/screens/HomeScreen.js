@@ -11,8 +11,9 @@ import OrderListSupplierScreen from './OrderListSupplierScreen';
 
 const HomeScreen = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo, category } = state;
+  const { userInfo, category, cart } = state;
   console.log(category);
+  console.log("cart",cart);
 
   //setTimeout(()=>{console.log(dataProduct,"dhukse")},5000)
   const [dataProduct, setData] = useState(null);
@@ -34,8 +35,7 @@ const HomeScreen = () => {
 
   const getAllCategory = async () => {
     const { data } = await axios.get('/category');
-    console.log(data);
-
+    //console.log(data);
     ctxDispatch({ type: 'CATEGORY', payload: data.category });
     localStorage.setItem('category', JSON.stringify(data.category));
   };

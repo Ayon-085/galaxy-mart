@@ -20,7 +20,7 @@ const HeaderSupplier = () => {
     localStorage.removeItem('paymentMethod');
     // localStorage.removeItem('cart')
 
-    console.log(userInfo);
+    //console.log(userInfo);
     navigate('/');
   };
 

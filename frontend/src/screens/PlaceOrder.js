@@ -23,15 +23,20 @@ const PlaceOrder = () => {
   cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
   cart.taxPrice = round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+   
+  
+  
 
   const placeOrderHandler = async () => {
-    const {data} = await axios.post('/orders',
+
+    console.log(cart.cartItemsBackend)
+    const {data} = await axios.post('/orders/checkout',
     {
-      orderItems: cart.cartItems,
-      shippingAddress:cart.shippingAddress,
+      items: cart.cartItemsBackend,
+      address:cart.shippingAddress.address,
+      city: cart.shippingAddress.city,
       itemsPrice:cart.itemsPrice,
-      shippingPrice:cart.shippingPrice,
-      totalPrice:cart.totalPrice
+      shippingPrice:cart.shippingPrice
     },
     {
       headers:{
@@ -43,6 +48,10 @@ const PlaceOrder = () => {
     ctxDispatch({type:'CLEAR_CART'})
 
     localStorage.removeItem('cartItems');
+
+    ctxDispatch({type:'CLEAR_CART_BACKEND'})
+
+    localStorage.removeItem('cartItemsBackend');
     
     navigate(`/orders/${data.order._id}`)
 

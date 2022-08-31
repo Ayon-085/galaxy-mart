@@ -14,6 +14,7 @@ import PlaceOrder from './screens/PlaceOrder';
 import ProfileScreen from './screens/ProfileScreen';
 import UploadProductScreen from './screens/UploadProductScreen';
 import DashBoardScreenAdmin from './screens/DashBoardScreenAdmin';
+import OrderScreen from './screens/OrderScreen';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
 
         <Header />
           
-        <main >
+        <main className='mainContainer' >
           <Container className ="mt-3">
             <Routes>
               
@@ -33,6 +34,7 @@ function App() {
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
               <Route path="/payment" element={<PaymentMethodScreen/>}/>
               <Route path="/placeorder" element={<PlaceOrder/>}/>
+              <Route path ='/orders/:_id' element={<OrderScreen/>}/>
               <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/supplier/uploadProduct" element={<UploadProductScreen/>}/>
               <Route path="/product/:_id" element={<ProductScreen />} />

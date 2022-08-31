@@ -5,6 +5,7 @@ import { createContext, useReducer } from 'react';
 export const Store = createContext();
 
 const initialState = {
+
   userInfo: localStorage.getItem('userInfo') ? 
   JSON.parse(localStorage.getItem('userInfo'))
   :null,
@@ -20,15 +21,23 @@ const initialState = {
      ? JSON.parse(localStorage.getItem('cartItems'))
     :[], 
 
+    cartItemsBackend:localStorage.getItem('cartItemsBackend')
+    ? JSON.parse(localStorage.getItem('cartItemsBackend'))
+   :[],
+
   },
   category:localStorage.getItem('category')?
   JSON.parse(localStorage.getItem('category')):[]
+  
+
+
 };
 
 
 
 function reducer(state, action) {
   switch (action.type) {
+
     case 'CART_ADD_ITEM':
       //add cart
       //localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -44,7 +53,23 @@ function reducer(state, action) {
       : [...state.cart.cartItems, newItem] ;
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return {...state, cart: {...state.cart, cartItems}}
-      
+
+     case 'CART_ADD_ITEM_BACKEND':{
+  
+      const newItem = action.payload;
+       console.log("newitem",newItem)
+      const existItem = state.cart.cartItemsBackend.find(
+        (item) => item.productId === newItem.productId
+      )
+
+       const cartItemsBackend = existItem ? state.cart.cartItemsBackend.map(
+        (item)=> item.productId === existItem.productId ? newItem : item
+      )
+      : [...state.cart.cartItemsBackend, newItem] ;
+      localStorage.setItem('cartItemsBackend', JSON.stringify(cartItemsBackend));
+      return {...state, cart: {...state.cart, cartItemsBackend}}
+
+     } 
      case 'CART_REMOVE_ITEM' : 
      {
        const cartItems = state.cart.cartItems.filter(
@@ -60,13 +85,31 @@ function reducer(state, action) {
        localStorage.setItem('cartItems', JSON.stringify(cartItems));
        return {...state, cart:{...state.cart, cartItems}}
       }
+      case 'CART_REMOVE_ITEM_BACKEND' : 
+      {
+        const cartItemsBackend = state.cart.cartItemsBackend.filter(
+           (item) =>
+           {
+             console.log(item._id)
+             console.log(action.payload._id)
+              
+            return item._id !==action.payload._id
+           }
+         );
+         //console.log("store :",cartItemsBackend)
+        localStorage.setItem('cartItemsBackend', JSON.stringify(cartItemsBackend));
+        return {...state, cart:{...state.cart, cartItemsBackend}}
+       }
      case 'CLEAR_CART':{
       return {...state, cart:{...state.cart,cartItems:[]}}
+     }
+     case 'CLEAR_CART_BACKEND':{
+      return {...state, cart:{...state.cart,cartItemsBackend:[]}}
      }
      case 'USER_SIGNIN':
        return {...state, userInfo:action.payload}
      case 'USER_SIGNOUT':
-       console.log('dddd')
+       //console.log('dddd')
        return {
          ...state,
          userInfo:null,

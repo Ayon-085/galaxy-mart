@@ -33,27 +33,6 @@ const signup = async (req, res, next) => {
         role: req.body.role,
         //profilePicture: images 
       });
-
-    //  let images = [];
-
-    //   if(req.files.length > 0){
-    //       images = req.files.map(file=>{
-    //           return {img: file.filename};
-    //       });
-    //   }
-    //   if(!images){
-        
-    //   }else {
-    //     const user = new userModel({
-    //         name: req.body.name,
-    //         //user_name: req.body.user_name,
-    //         email: req.body.email,
-    //         password: hashed_password,
-    //         role: req.body.role,
-    //         profilePicture: images 
-    //       });
-    //   }  
-     
       console.log(user);
       await user.save();
 

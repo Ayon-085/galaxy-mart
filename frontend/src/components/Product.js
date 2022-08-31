@@ -24,8 +24,9 @@ const productStatic = {
 
 const Product = (props) => {
   const { product } = props;
-  console.log('product info :', product);
-  console.log('product image :', product.images[0].img);
+ // console.log('product info :', product);
+  //console.log('product image :', product.images[0].img);
+  
   const img = {
     img: `/images/${product.images[0].img}`,
   };
@@ -58,6 +59,16 @@ const Product = (props) => {
     ctxDispatch({
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
+    });
+    ctxDispatch({
+      type: 'CART_ADD_ITEM_BACKEND',
+      payload: {
+         productId:item._id,
+         supplier: item.supplier,
+         price:item.price,
+         quantity:quantity,
+         
+        },
     });
   };
 

@@ -18,7 +18,7 @@ const HeaderAdmin = () => {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
-    // localStorage.removeItem('cart')
+    //localStorage.removeItem('cart')
 
     console.log(userInfo);
     navigate('/');

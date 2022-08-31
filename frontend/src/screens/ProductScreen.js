@@ -78,6 +78,16 @@ const ProductScreen = () => {
       payload: { ...dataProduct, quantity },
     });
     //navigate('/cart');
+    ctxDispatch({
+      type: 'CART_ADD_ITEM_BACKEND',
+      payload: {
+         productId:dataProduct._id,
+         supplier: dataProduct.supplier,
+         price: dataProduct.price,
+         quantity:quantity,
+         
+        },
+    });
   };
 
   const fetchData = async (e) => {

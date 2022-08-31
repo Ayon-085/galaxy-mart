@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 /* header {
@@ -28,9 +29,12 @@ body {
   background-color: #f8f8f8;
   box-shadow: 0 4px 2px -2px gray;
 }
-.main-con {
-  background-color: #dcdcdc;
+/* .main-con {
 }
+.mainContainer{
+  background-color: #dcdcdc;
+ 
+} */
 .rating span {
   color: #f7c64a;
 }
