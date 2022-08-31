@@ -73,5 +73,16 @@ const getOrders = async(req, res)=>{
     orderModel.find({userId}).sort({date:-1}).then(orders => res.status(201).json(orders));
 };
 
-module.exports = {checkOut, proceed, getOrders, getOrdersNotProcessedOfUser};
+const getOrdersById = async(req, res)=>{
+    const order_id = req.params.id;
+    try{
+        const order = await orderModel.findById(order_id);
+        res.status(201).json({order: order});
+    } catch(error){
+        console.log(error);
+        res.status(400).json({error: error});
+    }
+};
+
+module.exports = {checkOut, proceed, getOrders, getOrdersById, getOrdersNotProcessedOfUser};
 
