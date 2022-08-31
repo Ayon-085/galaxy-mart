@@ -20,8 +20,18 @@ const getUsers = async(req, res)=>{
     
 };
 
+
 const getOrdersNotProcessed = async(req, res)=>{
-    orderModel.find({isPaid: true, paymentProcessed: false}).sort({date:-1}).then(orders => res.status(201).json(orders));
+    try{
+        orderModel.find({isPaid: true, paymentProcessed: false}).sort({date:-1}).then(orders => res.status(201).json(orders));
+    } catch(error){
+        console.log(error);
+        res.status(400).json({error: error});
+    }
+};
+
+const getOrders = async(req, res)=>{
+    orderModel.find({}).sort({date:-1}).then(orders => res.status(201).json(orders));
 };
 
 const getOrdersBySupplier = async(req, res)=>{
@@ -240,4 +250,4 @@ const addShipment = async(req, res)=>{
 };
 
 
-module.exports = {admin_checkOut, proceed, getAccount, getOrdersNotProcessed, getShipment, getUsers, addShipment, getOrdersBySupplier};
+module.exports = {admin_checkOut, proceed, getAccount, getOrdersNotProcessed, getOrders, getShipment, getUsers, addShipment, getOrdersBySupplier};

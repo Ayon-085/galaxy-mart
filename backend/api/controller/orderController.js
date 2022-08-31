@@ -58,10 +58,20 @@ const proceed = async(req, res)=>{
     }
 };
 
+const getOrdersNotProcessedOfUser = async(req, res)=>{
+    const user_id = req.user_id;
+    try{
+        orderModel.find({user: user_id, isPaid: true, paymentProcessed: false}).sort({date:-1}).then(orders => res.status(201).json(orders));
+    } catch(error){
+        console.log(error);
+        res.status(400).json({error: error});
+    }
+};
+
 const getOrders = async(req, res)=>{
     const userId = req.user_id;
     orderModel.find({userId}).sort({date:-1}).then(orders => res.status(201).json(orders));
 };
 
-module.exports = {checkOut, proceed, getOrders};
+module.exports = {checkOut, proceed, getOrders, getOrdersNotProcessedOfUser};
 

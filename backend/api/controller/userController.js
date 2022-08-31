@@ -53,40 +53,24 @@ const login = async (req, res, next) => {
   try {
     const data = await userModel.find({ email: req.body.email });
     const user = data[0];
-    //console.log(user);
-    //console.log(data);
+
     if (user) {
       const is_valid_password = await bcrypt.compare(
         req.body.password,
         user.password
       );
-      //console.log(is_valid_password);
-      // console.log('');
-      // console.log(user);
+
       if (is_valid_password) {
         const token = jwt.sign(
           {
-            //user_name: user[0].user_name,
             email: user.email,
             user_id: user._id,
             role: user.role
           },
-          process.env.JWT_PRIVATE_KEY,
-          { expiresIn: '1h' }
+          process.env.JWT_SECRET,
+          { expiresIn: '60d' }
         );
-        //console.log(token);
-
-        //user[0].token = token;
-        //await user.save();
-
-        //cookie setting
-        // return res.cookie('access_token', token,{
-        //     expiresIn: '3600000',
-        //     httpOnly: true,
-        //     sign: true,
-        // })
-        // .status(200)
-        // .json({message: "Loggin in successfully !"});
+       
         return res.status(200).json({
           message: 'Logged in successfully',
           token: token,
@@ -115,16 +99,14 @@ const update_user = async (req, res, next) => {
     const user_id = req.user_id;
     console.log(user_id);
     const user = await userModel.findById(user_id);
-    //console.log(user);
-    //const salt = bcrypt.genSaltSync(10);
+    
     if(req.body.password){
       const hashed_password = await bcrypt.hash(req.body.password, 10) || user.password;
       user.password = hashed_password || user.password;
     }
-    //console.log(user.user_name);
-    //console.log(user._id);
+    
     console.log(user);
-    //console.log(hashed_password);    
+      
 
     let images = [];
 
@@ -135,14 +117,12 @@ const update_user = async (req, res, next) => {
     }
     console.log(images);
 
-    //console.log(req.body.email);
+    
     if (user) {
       user.name = req.body.name || user.name;
-      //user.user_name = req.user_name || user.user_name;
+      
       user.email = req.body.email || req.email;
-      // if(req.body.password){
-      //   user.password = hashed_password || user.password;
-      // }
+      
       user.profilePicture = images || user.profilePicture;
       user.bankAcc = req.body.bankAcc || user.bankAcc;
       user.sec_key = req.body.sec_key || user.sec_key;
@@ -151,15 +131,14 @@ const update_user = async (req, res, next) => {
 
       const token = jwt.sign(
         {
-          // user_name: user.user_name,
           email: user.email,
           user_id: user._id,
           role: user.role,
           bankAcc: user.bankAcc,
           sec_key: user.sec_key
         },
-        process.env.JWT_PRIVATE_KEY,
-        { expiresIn: '1h' }
+        process.env.JWT_SECRET,
+        { expiresIn: '60d' }
       );
 
       res.status(200).json({
@@ -174,8 +153,8 @@ const update_user = async (req, res, next) => {
     }
     console.log(user);
   } catch (err) {
-    //next("Authentication Failed. Login Again!!");
     console.log(err);
+    res.status(404).json({error: err});
   }
 };
 
